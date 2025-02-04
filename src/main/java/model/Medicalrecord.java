@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class Medicalrecords {
+public class Medicalrecord {
  private String firstName;
  private String lastName;
  private String birthdate;

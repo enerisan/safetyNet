@@ -1,6 +1,6 @@
 package model;
 
-public class Firestations {
+public class Firestation {
     public String getAddress() {
         return address;
     }

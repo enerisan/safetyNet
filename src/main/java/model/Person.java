@@ -3,7 +3,7 @@ package model;
 
 
 
-public class Persons {
+public class Person {
 
 
     private String firstName;
