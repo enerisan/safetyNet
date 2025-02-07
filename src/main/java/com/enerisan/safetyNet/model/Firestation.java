@@ -1,4 +1,4 @@
-package model;
+package com.enerisan.safetyNet.model;
 
 public class Firestation {
     public String getAddress() {

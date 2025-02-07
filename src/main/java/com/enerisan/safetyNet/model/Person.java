@@ -1,4 +1,4 @@
-package model;
+package com.enerisan.safetyNet.model;
 
 
 
