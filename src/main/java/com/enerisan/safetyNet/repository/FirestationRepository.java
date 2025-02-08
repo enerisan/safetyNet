@@ -7,18 +7,16 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class PersonRepository {
+public class FirestationRepository {
     private final DataHandler dataHandler;
 
-    public PersonRepository(DataHandler dataHandler) {
+    public FirestationRepository(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
     }
 
-
-    public List<Person> findAllPersons() {
-        return dataHandler.getData().getPersons();
+    public List<Firestation> findAllFirestations() {
+        return dataHandler.getData().getFirestations();
     }
-
 
 }
 
