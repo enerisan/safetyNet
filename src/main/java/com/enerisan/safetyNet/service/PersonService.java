@@ -7,6 +7,7 @@ import com.enerisan.safetyNet.repository.FirestationRepository;
 import com.enerisan.safetyNet.repository.MedicalrecordRepository;
 import com.enerisan.safetyNet.repository.PersonRepository;
 import com.enerisan.safetyNet.service.dto.ChildAlertDto;
+import com.enerisan.safetyNet.service.dto.FireDto;
 import com.enerisan.safetyNet.service.dto.PersonInfoDto;
 import org.springframework.stereotype.Service;
 
@@ -99,9 +100,9 @@ public class PersonService {
     }
 
     private boolean isMinor(int age) {
-      if (age < 18 ) {
-       return true;
-      }
+        if (age < 18) {
+            return true;
+        }
         return false;
     }
 
@@ -121,13 +122,28 @@ public class PersonService {
                 dto.setOtherMembers(persons.stream().filter(p -> !p.getFirstName().equals(person.getFirstName())).collect(Collectors.toList()));
                 childAlertDto.add(dto);
             }
-
         }
         return childAlertDto;
     }
 
 
     public List<FireDto> findAllPersonsByFirestation(String address) {
-        return null;
+        List<FireDto> fireDto = new ArrayList<>();
+        List<Person> persons = personRepository.findPersonsByAddress(address);
+        String  station = firestationRepository.findAllPersonsByFirestation(address).getStation();
+        for (Person person : persons) {
+            Medicalrecord medicalrecord = medicalrecordRepository.findMedicalrecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
+            int age = computeAge(medicalrecord.getBirthdate());
+            FireDto dto = new FireDto();
+            dto.setFirstName(person.getFirstName());
+            dto.setLastName(person.getLastName());
+            dto.setPhone(person.getPhone());
+            dto.setAge(String.valueOf(age));
+            dto.setMedications(medicalrecord.getMedications());
+            dto.setAllergies(medicalrecord.getAllergies());
+            dto.setStation(station);
+            fireDto.add(dto);
+        }
+        return fireDto;
     }
 }

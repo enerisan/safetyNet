@@ -31,14 +31,14 @@ public class FirestationController {
     public List<Firestation> getAllFirestationByStation(@RequestParam(name = "station") String station) {
         return personService.findAllFirestationByStation(station).stream().filter(s -> s.getStation().equals(station)).collect(Collectors.toList());
     }
+
     @GetMapping("/phoneAlert")
-    public  List<String>getAllTelephonesByFirestation(@RequestParam(name= "station") String station){
+    public List<String> getAllTelephonesByFirestation(@RequestParam(name = "station") String station) {
         return personService.findAllTelephonesByFirestation(station);
     }
 
-
-
-
+    @GetMapping("/firestation")
+public
 }
 
 

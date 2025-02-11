@@ -4,6 +4,7 @@ import com.enerisan.safetyNet.model.Firestation;
 import com.enerisan.safetyNet.model.Person;
 import com.enerisan.safetyNet.service.PersonService;
 import com.enerisan.safetyNet.service.dto.ChildAlertDto;
+import com.enerisan.safetyNet.service.dto.FireDto;
 import com.enerisan.safetyNet.service.dto.PersonInfoDto;
 import org.springframework.web.bind.annotation.*;
 
