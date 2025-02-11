@@ -1,12 +1,13 @@
-package com.enerisan.safetyNet.model;
+package com.enerisan.safetyNet.service.dto;
 
 import java.util.List;
 
-public class Medicalrecord {
- private String firstName;
- private String lastName;
- private String birthdate;
-
+public class PersonInfoDto {
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String age;
+    private String email;
     private String [] medications;
     private String [] allergies;
 
@@ -26,12 +27,28 @@ public class Medicalrecord {
         this.lastName = lastName;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String[] getMedications() {

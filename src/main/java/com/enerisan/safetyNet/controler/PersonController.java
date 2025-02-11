@@ -3,6 +3,8 @@ package com.enerisan.safetyNet.controler;
 import com.enerisan.safetyNet.model.Firestation;
 import com.enerisan.safetyNet.model.Person;
 import com.enerisan.safetyNet.service.PersonService;
+import com.enerisan.safetyNet.service.dto.ChildAlertDto;
+import com.enerisan.safetyNet.service.dto.PersonInfoDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +29,22 @@ public class PersonController {
     public List<String> Emails(@RequestParam(name = "city") String city) {
         return this.personService.findAllEmailsByCity(city);
     }
-}
 
+    @GetMapping("/personInfo")
+    public List<PersonInfoDto> getPersonInfo(@RequestParam(name="firstName") String firstName, @RequestParam(name="lastName") String lastName){
+        return this.personService.findPersonInfo(firstName, lastName);
+    }
+
+    @GetMapping("/childAlert")
+    public List<ChildAlertDto>getChildAlert(@RequestParam(name="address") String address){
+        return this.personService.findChildrenByAddress(address);
+    };
+
+    @GetMapping("/fire")
+    public List<FireDto>getAllPersonsByFirestation(@RequestParam(name="address")String address){
+        return this.personService.findAllPersonsByFirestation(address);
+    }
+
+}
 
 
