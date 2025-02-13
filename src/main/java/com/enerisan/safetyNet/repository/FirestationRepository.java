@@ -21,13 +21,15 @@ public class FirestationRepository {
         return this.dataHandler.getData().getFirestations();
     }
 
-    public Firestation findAllPersonsByFirestation(String address) {
+    public Firestation findFirestationByAddress(String address) {
        return this.dataHandler.getData().getFirestations().stream()
                .filter(f -> f.getAddress().equals(address))
                .findFirst()
                .orElseGet(() -> new Firestation());
     }
 
-
+    public List <Firestation> findAddressesByStation(String station){
+        return this.dataHandler.getData().getFirestations().stream().filter(f->f.getStation().equals(station)).collect(Collectors.toList());
+    }
 }
 

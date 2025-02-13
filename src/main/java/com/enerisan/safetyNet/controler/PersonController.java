@@ -3,9 +3,7 @@ package com.enerisan.safetyNet.controler;
 import com.enerisan.safetyNet.model.Firestation;
 import com.enerisan.safetyNet.model.Person;
 import com.enerisan.safetyNet.service.PersonService;
-import com.enerisan.safetyNet.service.dto.ChildAlertDto;
-import com.enerisan.safetyNet.service.dto.FireDto;
-import com.enerisan.safetyNet.service.dto.PersonInfoDto;
+import com.enerisan.safetyNet.service.dto.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +42,11 @@ public class PersonController {
     @GetMapping("/fire")
     public List<FireDto>getAllPersonsByFirestation(@RequestParam(name="address")String address){
         return this.personService.findAllPersonsByFirestation(address);
+    }
+
+    @GetMapping("/flood")
+        public List <FloodDto>getAllHomesByAddressAndStation(@RequestParam(name="stations")List <String> stations){
+        return this.personService.findAllHomesByAddressAndStation(stations);
     }
 
 }

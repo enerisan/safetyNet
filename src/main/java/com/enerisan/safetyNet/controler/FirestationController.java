@@ -1,7 +1,9 @@
 package com.enerisan.safetyNet.controler;
 
 import com.enerisan.safetyNet.model.Firestation;
+import com.enerisan.safetyNet.repository.FirestationRepository;
 import com.enerisan.safetyNet.service.PersonService;
+import com.enerisan.safetyNet.service.dto.FireStationDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,14 +14,16 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("firestation")
+
 
 public class FirestationController {
 
     private final PersonService personService;
+    private final FirestationRepository firestationRepository;
 
-    public FirestationController(PersonService personService) {
+    public FirestationController(PersonService personService, FirestationRepository firestationrepository) {
         this.personService = personService;
+        this.firestationRepository = firestationrepository;
     }
 
     @GetMapping("/getAllFirestations")
@@ -37,8 +41,17 @@ public class FirestationController {
         return personService.findAllTelephonesByFirestation(station);
     }
 
-    @GetMapping("/firestation")
-public
-}
+    @GetMapping("/addresses")
+    public List <Firestation> getaddressbyStation(@RequestParam(name = "stationNumber") String station) {
+        return firestationRepository.findAddressesByStation(station);
 
+    }
+
+    @GetMapping("/firestation")
+    public FireStationDto getPeopleByStation(@RequestParam(name = "stationNumber") String station) {
+        return personService.findPeopleByStation(station);
+    }
+
+
+}
 

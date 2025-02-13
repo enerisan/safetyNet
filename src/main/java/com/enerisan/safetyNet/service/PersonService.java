@@ -6,9 +6,7 @@ import com.enerisan.safetyNet.model.Person;
 import com.enerisan.safetyNet.repository.FirestationRepository;
 import com.enerisan.safetyNet.repository.MedicalrecordRepository;
 import com.enerisan.safetyNet.repository.PersonRepository;
-import com.enerisan.safetyNet.service.dto.ChildAlertDto;
-import com.enerisan.safetyNet.service.dto.FireDto;
-import com.enerisan.safetyNet.service.dto.PersonInfoDto;
+import com.enerisan.safetyNet.service.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -130,7 +128,7 @@ public class PersonService {
     public List<FireDto> findAllPersonsByFirestation(String address) {
         List<FireDto> fireDto = new ArrayList<>();
         List<Person> persons = personRepository.findPersonsByAddress(address);
-        String  station = firestationRepository.findAllPersonsByFirestation(address).getStation();
+        String station = firestationRepository.findFirestationByAddress(address).getStation();
         for (Person person : persons) {
             Medicalrecord medicalrecord = medicalrecordRepository.findMedicalrecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
             int age = computeAge(medicalrecord.getBirthdate());
@@ -145,5 +143,69 @@ public class PersonService {
             fireDto.add(dto);
         }
         return fireDto;
+    }
+
+    public FireStationDto findPeopleByStation(String station) {
+        FireStationDto fireStationDto = new FireStationDto();
+        List<Firestation> firestations = firestationRepository.findAddressesByStation(station);
+        List<FireStationPersonDto> fireStationPersonDto = new ArrayList<>();
+        Integer numberOfAdults = 0;
+        Integer numberOfChildren = 0;
+        for (Firestation firestation : firestations) {
+            String address = firestation.getAddress();
+            List<Person> persons = personRepository.findPersonsByAddress(address);
+            for (Person person : persons) {
+                FireStationPersonDto dto = new FireStationPersonDto();
+                Medicalrecord medicalrecord = medicalrecordRepository.findMedicalrecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
+                int age = computeAge(medicalrecord.getBirthdate());
+                dto.setFirstName(person.getFirstName());
+                dto.setLastName(person.getLastName());
+                dto.setAddress(person.getAddress());
+                dto.setPhone(person.getPhone());
+                if (isMinor(age)) {
+                    numberOfChildren += 1;
+                } else {
+                    numberOfAdults += 1;
+                }
+                fireStationPersonDto.add(dto);
+            }
+            fireStationDto.setNumberOfAdults(numberOfAdults);
+            fireStationDto.setNumberOfChildren(numberOfChildren);
+            fireStationDto.setPeople(fireStationPersonDto);
+        }
+        return fireStationDto;
+    }
+
+
+
+    public List<FloodDto> findAllHomesByAddressAndStation(List<String> stations) {
+        List<FloodDto> floodDtos = new ArrayList<>();
+        for (String station : stations) {
+            List<Firestation> firestations = firestationRepository.findAddressesByStation(station);
+            List<String> addresses = firestations.stream().map(f -> f.getAddress()).collect(Collectors.toList());
+            for (String address : addresses) {
+                List<FireDto> people = new ArrayList<>();
+                List<Person> persons = personRepository.findPersonsByAddress(address);
+                for (Person person : persons) {
+                    Medicalrecord medicalrecord = medicalrecordRepository.findMedicalrecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
+                   int age = computeAge(medicalrecord.getBirthdate());
+                    FireDto fireDto = new FireDto();
+                    fireDto.setFirstName(person.getFirstName());
+                    fireDto.setLastName(person.getLastName());
+                    fireDto.setPhone(person.getPhone());
+                    fireDto.setAge(String.valueOf(age));
+                    fireDto.setMedications(medicalrecord.getMedications());
+                    fireDto.setAllergies(medicalrecord.getAllergies());
+                    fireDto.setStation(station);
+                    people.add(fireDto);
+                }
+                FloodDto floodDto = new FloodDto();
+                floodDto.setAddress(address);
+                floodDto.setPeople(people);
+                floodDtos.add(floodDto);
+            }
+
+        }
+        return floodDtos;
     }
 }
