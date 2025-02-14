@@ -41,13 +41,9 @@ public class PersonService {
     }
 
 
-
-
     public List<String> findAllEmailsByCity(String city) {
         return this.personRepository.findAllPersons().stream().filter(p -> p.getCity().equals(city)).map(p -> p.getEmail()).collect(Collectors.toList());
     }
-
-
 
 
     public List<String> findAllTelephonesByFirestation(String station) {
@@ -205,18 +201,21 @@ public class PersonService {
         return personRepository.add(person);
     }
 
-    public Person updatePerson(Person person, String firstName, String lastName) {
-        Person oldPerson = personRepository.findPersonByFirstNameAndLastName(firstName, lastName);
-        oldPerson.setAddress(person.getAddress());
-        oldPerson.setCity(person.getCity());
-        oldPerson.setZip(person.getZip());
-        oldPerson.setPhone(person.getPhone());
-        oldPerson.setEmail(person.getEmail());
-        return oldPerson;
+    public Person updatePerson(Person newPerson, String firstName, String lastName) {
+        List<Person> persons = personRepository.findAllPersons();
+        Person person = personRepository.findPersonByFirstNameAndLastName(firstName, lastName);
+        persons.remove(person);
+        person.setAddress(newPerson.getAddress());
+        person.setCity(newPerson.getCity());
+        person.setZip(newPerson.getZip());
+        person.setPhone(newPerson.getPhone());
+        person.setEmail(newPerson.getEmail());
+        persons.add(person);
+        return person;
     }
 
     public void deletePersonByFirstNameAndLastName(String firstName, String lastName) {
-        personRepository.deletePerson(firstName,lastName);
+        personRepository.deletePerson(firstName, lastName);
     }
 
 
