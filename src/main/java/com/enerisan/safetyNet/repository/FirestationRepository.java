@@ -22,14 +22,28 @@ public class FirestationRepository {
     }
 
     public Firestation findFirestationByAddress(String address) {
-       return this.dataHandler.getData().getFirestations().stream()
-               .filter(f -> f.getAddress().equals(address))
-               .findFirst()
-               .orElseGet(() -> new Firestation());
+        return this.dataHandler.getData().getFirestations().stream()
+                .filter(f -> f.getAddress().equals(address))
+                .findFirst()
+                .orElseGet(() -> new Firestation());
     }
 
-    public List <Firestation> findAddressesByStation(String station){
-        return this.dataHandler.getData().getFirestations().stream().filter(f->f.getStation().equals(station)).collect(Collectors.toList());
+    public List<Firestation> findAddressesByStation(String station) {
+        return this.dataHandler.getData().getFirestations().stream().filter(f -> f.getStation().equals(station)).collect(Collectors.toList());
+    }
+
+    public Firestation add(Firestation firestation) {
+        List<Firestation> firestations = dataHandler.getData().getFirestations();
+        firestations.add(firestation);
+        return firestation;
+    }
+
+
+
+    public void deleteFirestation(String station) {
+        List <Firestation> firestation = findAddressesByStation(station);
+        List<Firestation> allFirestations = dataHandler.getData().getFirestations();
+        allFirestations.remove(firestation) ;
     }
 }
 

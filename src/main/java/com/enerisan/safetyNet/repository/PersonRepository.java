@@ -4,6 +4,7 @@ import com.enerisan.safetyNet.model.Firestation;
 import com.enerisan.safetyNet.model.Person;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,9 +32,21 @@ public class PersonRepository {
 
     public List<Person> findPersonsByAddress(String address) {
         //It returns the list of persons with the given address
-        return dataHandler.getData().getPersons().stream().filter(p->p.getAddress().equals(address)).collect(Collectors.toList());
+        return dataHandler.getData().getPersons().stream().filter(p -> p.getAddress().equals(address)).collect(Collectors.toList());
     }
 
 
+    public Person add(Person person) {
+        List<Person> persons = dataHandler.getData().getPersons();
+        persons.add(person);
+        return person;
+    }
+
+    public void deletePerson(String firstName, String lastName) {
+        Person person = findPersonByFirstNameAndLastName(firstName, lastName);
+        List <Person> persons =  dataHandler.getData().getPersons();
+        persons.remove(person);
+
+    }
 }
 

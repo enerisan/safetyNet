@@ -21,6 +21,9 @@ public class Firestation {
     }
 
 
+    public Firestation updateFirestation(Firestation firestation, String station) {
+        return null;
+    }
 }
 
 

@@ -41,21 +41,13 @@ public class PersonService {
     }
 
 
-    public List<Firestation> findAllFirestation() {
-        Iterable<Firestation> firestations = firestationRepository.findAllFirestations();
-        List<Firestation> result = new ArrayList<>();
-        firestations.forEach(result::add);
-        return result;
-    }
+
 
     public List<String> findAllEmailsByCity(String city) {
         return this.personRepository.findAllPersons().stream().filter(p -> p.getCity().equals(city)).map(p -> p.getEmail()).collect(Collectors.toList());
     }
 
-    public List<Firestation> findAllFirestationByStation(String station) {
 
-        return this.firestationRepository.findAllFirestations().stream().filter(s -> s.getStation().equals(station)).collect(Collectors.toList());
-    }
 
 
     public List<String> findAllTelephonesByFirestation(String station) {
@@ -177,7 +169,6 @@ public class PersonService {
     }
 
 
-
     public List<FloodDto> findAllHomesByAddressAndStation(List<String> stations) {
         List<FloodDto> floodDtos = new ArrayList<>();
         for (String station : stations) {
@@ -188,7 +179,7 @@ public class PersonService {
                 List<Person> persons = personRepository.findPersonsByAddress(address);
                 for (Person person : persons) {
                     Medicalrecord medicalrecord = medicalrecordRepository.findMedicalrecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
-                   int age = computeAge(medicalrecord.getBirthdate());
+                    int age = computeAge(medicalrecord.getBirthdate());
                     FireDto fireDto = new FireDto();
                     fireDto.setFirstName(person.getFirstName());
                     fireDto.setLastName(person.getLastName());
@@ -208,4 +199,25 @@ public class PersonService {
         }
         return floodDtos;
     }
+
+    public Person createPerson(Person person) {
+
+        return personRepository.add(person);
+    }
+
+    public Person updatePerson(Person person, String firstName, String lastName) {
+        Person oldPerson = personRepository.findPersonByFirstNameAndLastName(firstName, lastName);
+        oldPerson.setAddress(person.getAddress());
+        oldPerson.setCity(person.getCity());
+        oldPerson.setZip(person.getZip());
+        oldPerson.setPhone(person.getPhone());
+        oldPerson.setEmail(person.getEmail());
+        return oldPerson;
+    }
+
+    public void deletePersonByFirstNameAndLastName(String firstName, String lastName) {
+        personRepository.deletePerson(firstName,lastName);
+    }
+
+
 }
