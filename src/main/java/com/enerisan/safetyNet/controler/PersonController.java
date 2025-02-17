@@ -25,7 +25,7 @@ public class PersonController {
     }
 
     @GetMapping("/communityEmail")
-    public List<String> Emails(@RequestParam(name = "city") String city) {
+    public List<String>emails(@RequestParam(name = "city") String city) {
         return this.personService.findAllEmailsByCity(city);
     }
 
@@ -66,5 +66,3 @@ public class PersonController {
         personService.deletePersonByFirstNameAndLastName(firstName, lastName);
     }
 }
-
-

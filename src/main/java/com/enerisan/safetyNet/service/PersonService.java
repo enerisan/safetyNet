@@ -203,15 +203,18 @@ public class PersonService {
 
     public Person updatePerson(Person newPerson, String firstName, String lastName) {
         List<Person> persons = personRepository.findAllPersons();
-        Person person = personRepository.findPersonByFirstNameAndLastName(firstName, lastName);
-        persons.remove(person);
-        person.setAddress(newPerson.getAddress());
-        person.setCity(newPerson.getCity());
-        person.setZip(newPerson.getZip());
-        person.setPhone(newPerson.getPhone());
-        person.setEmail(newPerson.getEmail());
-        persons.add(person);
-        return person;
+        Person oldPerson = personRepository.findPersonByFirstNameAndLastName(firstName, lastName);
+        persons.remove(oldPerson);
+        Person updatedPerson = new Person();
+        updatedPerson.setFirstName(firstName);
+        updatedPerson.setLastName(lastName);
+        updatedPerson.setAddress(newPerson.getAddress());
+        updatedPerson.setCity(newPerson.getCity());
+        updatedPerson.setZip(newPerson.getZip());
+        updatedPerson.setPhone(newPerson.getPhone());
+        updatedPerson.setEmail(newPerson.getEmail());
+        persons.add(updatedPerson);
+        return updatedPerson;
     }
 
     public void deletePersonByFirstNameAndLastName(String firstName, String lastName) {

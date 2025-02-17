@@ -1,5 +1,6 @@
 package com.enerisan.safetyNet.repository;
 
+import com.enerisan.safetyNet.model.Firestation;
 import com.enerisan.safetyNet.model.Medicalrecord;
 import com.enerisan.safetyNet.model.Person;
 import org.springframework.stereotype.Component;
@@ -27,5 +28,16 @@ public class MedicalrecordRepository {
                 .findFirst()
                 .orElseGet(() -> new Medicalrecord());
     }
-}
 
+    public Medicalrecord add(Medicalrecord medicalrecord) {
+        List<Medicalrecord> medicalRecords = dataHandler.getData().getMedicalrecords();
+        medicalRecords.add(medicalrecord);
+        return medicalrecord;
+    }
+
+    public void deleteMedicalrecord(String firstName, String lastName) {
+        Medicalrecord medicalrecord = findMedicalrecordByFirstNameAndLastName(firstName, lastName);
+        List<Medicalrecord> medicalrecords = dataHandler.getData().getMedicalrecords();
+        medicalrecords.remove(medicalrecord);
+    }
+}
