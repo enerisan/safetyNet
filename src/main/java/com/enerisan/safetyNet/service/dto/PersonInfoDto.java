@@ -11,6 +11,21 @@ public class PersonInfoDto {
     private String [] medications;
     private String [] allergies;
 
+
+
+    public PersonInfoDto() {
+    }
+
+    public PersonInfoDto(String firstName, String lastName, String address, String age, String email, String[] medications, String[] allergies) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.age = age;
+        this.email = email;
+        this.medications = medications;
+        this.allergies = allergies;
+    }
+
     public String getFirstName() {
         return firstName;
     }

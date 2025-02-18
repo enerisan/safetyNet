@@ -5,7 +5,19 @@ import java.util.List;
 public class Medicalrecord {
  private String firstName;
  private String lastName;
- private String birthdate;
+
+    public Medicalrecord(String firstName, String lastName, String birthdate, String[] medications, String[] allergies) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.medications = medications;
+        this.allergies = allergies;
+    }
+
+    public Medicalrecord() {
+    }
+
+    private String birthdate;
 
     private String [] medications;
     private String [] allergies;

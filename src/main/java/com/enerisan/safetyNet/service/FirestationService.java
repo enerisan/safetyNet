@@ -49,14 +49,15 @@ public class FirestationService {
         return firestationRepository.add(firestation);
     }
 
-    public Firestation updateFirestation(Firestation newFirestation, String address) {
-        Firestation firestation = firestationRepository.findFirestationByAddress(address);
-        List <Firestation> firestations = firestationRepository.findAllFirestations();
-        firestations.remove(firestation);
-        firestation.setAddress(address);
-        firestation.setStation(newFirestation.getStation());
-        firestations.add(firestation);
-        return newFirestation;
+    public Firestation updateFirestation(Firestation firestation, String address) {
+        Firestation oldFirestation = firestationRepository.findFirestationByAddress(address);
+        List<Firestation> firestations = firestationRepository.findAllFirestations();
+        firestations.remove(oldFirestation);
+        Firestation newFirestation = new Firestation();
+        newFirestation.setAddress(firestation.getAddress());
+        newFirestation.setStation(firestation.getStation());
+        firestations.add(newFirestation);
+        return firestationRepository.findFirestationByAddress(newFirestation.getAddress());
     }
 
     public void deleteFirestationByStationNumber(String station) {

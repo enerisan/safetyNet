@@ -1,6 +1,18 @@
 package com.enerisan.safetyNet.model;
 
 public class Firestation {
+    private String address;
+    private String station;
+
+    public Firestation(String address, String station) {
+        this.address = address;
+        this.station = station;
+    }
+
+    public Firestation() {
+
+    }
+
     public String getAddress() {
         return address;
     }
@@ -9,8 +21,7 @@ public class Firestation {
         this.address = address;
     }
 
-    private String address;
-    private String station;
+
 
     public String getStation() {
         return station;

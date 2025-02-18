@@ -43,7 +43,7 @@ public class FirestationRepository {
     public void deleteFirestation(String station) {
         List <Firestation> firestation = findAddressesByStation(station);
         List<Firestation> allFirestations = dataHandler.getData().getFirestations();
-        allFirestations.remove(firestation) ;
+        allFirestations.removeIf(f -> f.getStation().equals(station));
     }
 }
 

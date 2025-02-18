@@ -38,7 +38,7 @@ public class FirestationController {
     }
 
     @GetMapping("/getFirestationByAddress")
-    public Firestation firestation(@RequestParam(name = "address") String address) {
+    public Firestation getFirestationByAddress(@RequestParam(name = "address") String address) {
         return firestationRepository.findFirestationByAddress(address);
     }
 

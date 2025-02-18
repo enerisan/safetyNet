@@ -42,6 +42,7 @@ class PersonControllerTest {
 
     @Test
     void getAllpersons() {
+        Assertions.assertThat(!personController.getAllpersons().isEmpty());
     }
 
     @Test
@@ -87,7 +88,8 @@ class PersonControllerTest {
         personRepository.add(person);
         Person personUpdate = new Person("Lois", "Lane", "8 Victoria Road", "NY", "13100", "0506789", "person@gmail.com");
         personService.updatePerson(personUpdate, "Lois", "Lane");
-
+        Person result = personRepository.findPersonByFirstNameAndLastName(personUpdate.getFirstName(), personUpdate.getLastName());
+        assert(result.getAddress().equals(personUpdate.getAddress()));
     }
 
     @Test

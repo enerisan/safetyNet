@@ -78,7 +78,7 @@ public class PersonService {
         return personInfoDto;
     }
 
-    private int computeAge(String birthdateOfPerson) {
+    public int computeAge(String birthdateOfPerson) {
         LocalDate formatedBirthDate = LocalDate.parse(birthdateOfPerson, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         LocalDate curDate = LocalDate.now();
         int age = Period.between(formatedBirthDate, curDate).getYears();
