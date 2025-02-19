@@ -4,6 +4,7 @@ import com.enerisan.safetyNet.controler.FirestationController;
 import com.enerisan.safetyNet.model.Firestation;
 import com.enerisan.safetyNet.repository.FirestationRepository;
 import com.enerisan.safetyNet.service.FirestationService;
+import com.enerisan.safetyNet.service.dto.FireStationDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,7 +66,9 @@ class FirestationControllerTest {
 
     @Test
     void getPeopleByStation() {
-        Assertions.assertThat(firestationController.getPeopleByStation("1")).isNotNull();
+//        Assertions.assertThat(firestationController.getPeopleByStation("1")).isNotNull();
+        FireStationDto result = firestationController.getPeopleByStation("2");
+       Assertions.assertThat(result.getPeople().get(0).getFirstName().contains("Johnanthan"));
 
     }
 
